@@ -52,7 +52,7 @@ body {
 }
 
 @media(min-width: 992px) {
-    .md--f-size-1-5 {
+    .md-f-size-1-5 {
         font-size: 1.5rem;
     }
 }
