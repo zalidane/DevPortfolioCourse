@@ -1,14 +1,20 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+IConfiguration _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
 
-builder.Services.AddControllers();
+// Add services to the container.
+builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlite(
+    _configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "Server", Version = "v1" });
 });
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -20,6 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
