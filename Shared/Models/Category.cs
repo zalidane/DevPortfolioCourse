@@ -5,7 +5,7 @@ namespace Shared.Models
     public class Category
     {
         [Key]
-        public string CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         [Required]
         [MaxLength(256)]
