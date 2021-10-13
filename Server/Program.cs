@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 IConfiguration _configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
 
 // Add services to the container.
+builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
 builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlite(
     _configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddSwaggerGen(c =>
@@ -27,6 +29,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseRouting();
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

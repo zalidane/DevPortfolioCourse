@@ -13,7 +13,7 @@ namespace Client.Services
             _httpClient = httpClient;
         }
 
-        private List<Category> _categories = null;
+        private List<Category> _categories = new();
         internal List<Category> Categories
         {
             get
